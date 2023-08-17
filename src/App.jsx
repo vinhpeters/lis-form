@@ -19,7 +19,7 @@ function validateTitle(value) {
 export default function App() {
   const [showForm, toggleShowForm] = useState(true);
   const [records, setRecords] = useState([]);
-
+  const [latestRecord, setLatestRecord] = useState();
   return (
     <>
       {showForm ? (
@@ -33,12 +33,13 @@ export default function App() {
               hometown: "",
             }}
             onSubmit={(values) => {
+              setLatestRecord(values);
               setRecords([values, ...records]);
               toggleShowForm(!showForm);
             }}
           >
             {({ errors, touched }) => (
-              <Form >
+              <Form>
                 <div>
                   <label
                     htmlFor="title"
@@ -92,10 +93,8 @@ export default function App() {
                   <Field
                     id="age"
                     name="age"
-                
                     type="number"
-               
-                    min = "0"
+                    min="0"
                     max="150"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
@@ -136,31 +135,48 @@ export default function App() {
         </div>
       ) : (
         <div className="w-1/2  m-auto mt-6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-          <h1 className="text-2xl">Records</h1>
+      
+          {latestRecord && (
+            <div className="my-2">
+              <h1 className="text-2xl">Last Submission</h1>
+              <div>Title: {latestRecord.title}</div>
+              <div>Name: {latestRecord.name}</div>
+              <div>
+                Age: {latestRecord.age ? latestRecord.age : "Not entered"}
+              </div>
+              <div>
+                Hometown:{" "}
+                {latestRecord.hometown ? latestRecord.hometown : "Not entered"}
+              </div>
+            </div>
+          )}
+           <h1 className="text-2xl">All Records</h1>
           <table className="w-full text-left ">
-        <thead>
-            <tr>
+            <thead>
+              <tr>
                 <th scope="col" className="px-6 py-3">
-                    Title
+                  Title
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Name
+                  Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Age
+                  Age
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Hometown
+                  Hometown
                 </th>
-            </tr>
-        </thead>
+              </tr>
+            </thead>
             <tbody>
               {records.map((record, index) => {
                 return (
                   <tr key={index} className="border-b">
                     <td className="px-6 py-4">{record.title}</td>
                     <td className="px-6 py-4">{record.name}</td>
-                    <td className="px-6 py-4">{record.age === 0 ? "" : record.age }</td>
+                    <td className="px-6 py-4">
+                      {record.age === 0 ? "" : record.age}
+                    </td>
                     <td className="px-6 py-4">{record.hometown}</td>
                   </tr>
                 );
