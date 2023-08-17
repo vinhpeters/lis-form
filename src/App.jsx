@@ -92,9 +92,10 @@ export default function App() {
                   <Field
                     id="age"
                     name="age"
-                    placeholder="40"
+                
                     type="number"
-                    min="0"
+               
+                    min = "0"
                     max="150"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
@@ -159,7 +160,7 @@ export default function App() {
                   <tr key={index} className="border-b">
                     <td className="px-6 py-4">{record.title}</td>
                     <td className="px-6 py-4">{record.name}</td>
-                    <td className="px-6 py-4">{record.age}</td>
+                    <td className="px-6 py-4">{record.age === 0 ? "" : record.age }</td>
                     <td className="px-6 py-4">{record.hometown}</td>
                   </tr>
                 );
